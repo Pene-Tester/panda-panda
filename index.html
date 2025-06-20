@@ -89,12 +89,68 @@
       from { box-shadow: 0 0 16px 2px #b6c7d6, 0 2px 8px rgba(140, 160, 180, 0.10); }
       to { box-shadow: 0 0 32px 8px #b6c7d6, 0 2px 8px rgba(140, 160, 180, 0.13); }
     }
+    .sleepy-loading {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(248, 243, 238, 0.98);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: fadeIn 0.5s;
+    }
+    .sleepy-panda-anim {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+    .sleepy-text {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      color: #8fa6b4;
+      margin-top: 0.7rem;
+      letter-spacing: 0.2px;
+      text-align: center;
+    }
+    .sleepy-zzz {
+      font-size: 1.3em;
+      animation: zzzBounce 1.1s infinite alternate;
+      display: inline-block;
+    }
+    @keyframes zzzBounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <div class="landing-wrapper">
     <div class="greeting" id="greeting"></div>
     <button class="enter-btn" onclick="transitionToMoods()">Enter Baymax System</button>
+  </div>
+  <div class="sleepy-loading" id="sleepyLoading" style="display:none;">
+    <div class="sleepy-panda-anim">
+      <svg width="110" height="90" viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ears -->
+        <ellipse cx="25" cy="30" rx="13" ry="15" fill="#8fa6b4"/>
+        <ellipse cx="85" cy="30" rx="13" ry="15" fill="#8fa6b4"/>
+        <!-- Head -->
+        <ellipse cx="55" cy="55" rx="40" ry="32" fill="#fff" stroke="#5c6a74" stroke-width="2"/>
+        <!-- Eyes closed -->
+        <path d="M40 60 Q45 65 50 60" stroke="#5c6a74" stroke-width="3" fill="none"/>
+        <path d="M60 60 Q65 65 70 60" stroke="#5c6a74" stroke-width="3" fill="none"/>
+        <!-- Nose -->
+        <ellipse cx="55" cy="65" rx="6" ry="3" fill="#5c6a74"/>
+        <!-- Zzz -->
+        <text x="80" y="25" font-size="18" fill="#b6c7d6" font-family="Arial">Zzz</text>
+      </svg>
+      <div class="sleepy-text">Loading... <span class="sleepy-zzz">💤</span></div>
+    </div>
   </div>
   <div class="page-transition" id="pageTransition" style="display:none;"></div>
   <script>
@@ -118,12 +174,10 @@
     greetingContainer.appendChild(panda);
 
     function transitionToMoods() {
-      const transition = document.getElementById('pageTransition');
-      transition.style.display = 'block';
-      transition.classList.add('active');
+      document.getElementById('sleepyLoading').style.display = 'flex';
       setTimeout(() => {
         window.location.href = 'moods.html';
-      }, 500);
+      }, 2500);
     }
   </script>
 </body>

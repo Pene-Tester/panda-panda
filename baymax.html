@@ -64,13 +64,13 @@
       align-items: flex-end;
       justify-content: center;
       position: relative;
-      width: 180px;
-      height: 210px;
-      max-width: 95vw;
+      width: 260px;
+      height: 300px;
+      max-width: 98vw;
     }
     .cake-svg {
-      width: 180px;
-      height: 210px;
+      width: 260px;
+      height: 300px;
       display: block;
       z-index: 3;
     }
@@ -145,12 +145,12 @@
       }
       .cake-svg-container {
         width: 98vw;
-        height: 160px;
+        height: 180px;
         min-width: 0;
       }
       .cake-svg {
         width: 98vw;
-        height: 160px;
+        height: 180px;
       }
       .back-btn {
         top: 8px;
@@ -231,6 +231,85 @@
       font-size: 1.3em;
       display: inline-block;
     }
+    .wish-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.8);
+      border-radius: 1.2rem;
+      padding: 1.1rem 1.2rem;
+      box-shadow: 0 2px 8px rgba(140, 160, 180, 0.10);
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .wish-label {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      color: #8fa6b4;
+      margin-bottom: 0.2rem;
+      text-align: center;
+    }
+    .wish-input {
+      border-radius: 1rem;
+      border: 1.5px solid #e68fa6;
+      padding: 0.5rem 1rem;
+      font-size: 1.1rem;
+      font-family: 'Inter', Arial, sans-serif;
+      outline: none;
+      width: 220px;
+      transition: border 0.2s;
+      margin-bottom: 0.2rem;
+    }
+    .wish-input:focus {
+      border: 1.5px solid #b6a6e6;
+    }
+    .wish-submit {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      background: #e68fa6;
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px 1px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.10);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      letter-spacing: 0.3px;
+      margin-top: 0.2rem;
+    }
+    .wish-submit:hover {
+      background: #b6a6e6;
+      box-shadow: 0 0 18px 4px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.13);
+      transform: scale(1.04);
+    }
+    .wish-received {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.5rem;
+      gap: 1.2rem;
+    }
+    .wish-received-msg {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      color: #e68fa6;
+      text-align: center;
+      background: rgba(255,255,255,0.8);
+      border-radius: 1.2rem;
+      padding: 1.1rem 1.2rem;
+      box-shadow: 0 2px 8px rgba(140, 160, 180, 0.10);
+      max-width: 340px;
+    }
+    .confetti {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
@@ -263,6 +342,15 @@
       </svg>
     </div>
     <button class="blow-btn" id="blowBtn" onclick="blowCandle()" style="display:none;">Blow Candle</button>
+    <form id="wishForm" class="wish-form" style="display:none;" method="POST" action="https://formspree.io/f/xpwrjrrq">
+      <label for="wishInput" class="wish-label">Make a wish! <span style="font-size:1.2em;">🌠</span></label>
+      <input type="text" id="wishInput" name="wish" class="wish-input" placeholder="Type your wish here..." required autocomplete="off" maxlength="120" />
+      <button type="submit" class="wish-submit">Send Wish</button>
+    </form>
+    <div class="wish-received" id="wishReceived" style="display:none;">
+      <div class="wish-received-msg">Wish received! 🎉<br>Baymax are cheering for you!</div>
+      <div class="confetti" id="confetti"></div>
+    </div>
     <div class="happy-message" id="happyMsg">Yay! Happy Birthday! 🎉</div>
     <div class="baymax-panda-row">
       <svg class="baymax-face" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -330,8 +418,51 @@
       cake.classList.add('extinguished');
       setTimeout(() => {
         msg.classList.add('visible');
+        document.getElementById('wishForm').style.display = 'flex';
       }, 700);
     }
+    // Confetti animation
+    function launchConfetti() {
+      const confetti = document.getElementById('confetti');
+      confetti.innerHTML = '';
+      for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div');
+        c.style.position = 'absolute';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '-30px';
+        c.style.width = '12px';
+        c.style.height = '12px';
+        c.style.borderRadius = '50%';
+        c.style.background = ['#e68fa6','#ffe066','#8fa6b4','#f7b6b6','#b6a6e6','#fffbe6'][Math.floor(Math.random()*6)];
+        c.style.opacity = 0.85;
+        c.style.transition = 'transform 2.2s cubic-bezier(.4,0,.2,1), opacity 2.2s';
+        confetti.appendChild(c);
+        setTimeout(() => {
+          c.style.transform = `translateY(${window.innerHeight+60}px) rotate(${Math.random()*360}deg)`;
+          c.style.opacity = 0;
+        }, 30);
+      }
+      setTimeout(() => { confetti.innerHTML = ''; }, 2500);
+    }
+    // Handle wish form submit
+    document.addEventListener('DOMContentLoaded', function() {
+      const wishForm = document.getElementById('wishForm');
+      if (wishForm) {
+        wishForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // Send to Formspree
+          fetch(wishForm.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(wishForm)
+          }).then(() => {
+            wishForm.style.display = 'none';
+            document.getElementById('wishReceived').style.display = 'flex';
+            launchConfetti();
+          });
+        });
+      }
+    });
   </script>
 </body>
 </html> 
