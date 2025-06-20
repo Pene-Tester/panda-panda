@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baymax Birthday Note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #e6f0f7 0%, #f8f3ee 100%);
+      font-family: 'Inter', Arial, sans-serif;
+      color: #5c6a74;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    .baymax-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      width: 100%;
+      min-height: 100vh;
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .baymax-title {
+      font-family: 'Merriweather', serif;
+      font-size: 2.1rem;
+      color: #8fa6b4;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 12px #e6eaf7;
+    }
+    .birthday-note {
+      font-size: 1.18rem;
+      color: #6b7c89;
+      margin-bottom: 2.2rem;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.1px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 1.2rem;
+      padding: 1.1rem 1.2rem 1.1rem 1.2rem;
+      box-shadow: 0 2px 8px rgba(140, 160, 180, 0.10);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cake-svg-container {
+      margin: 1.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+      width: 180px;
+      height: 210px;
+      max-width: 95vw;
+    }
+    .cake-svg {
+      width: 180px;
+      height: 210px;
+      display: block;
+      z-index: 3;
+    }
+    .candle-flame {
+      transform-origin: 50% 100%;
+      animation: flameFlicker 1.2s infinite alternate;
+      opacity: 1;
+      transition: opacity 0.7s;
+    }
+    .cake-svg.extinguished .candle-flame {
+      opacity: 0;
+      animation: none;
+    }
+    @keyframes flameFlicker {
+      0% { transform: scaleY(1) rotate(-3deg); }
+      50% { transform: scaleY(1.15) rotate(3deg); }
+      100% { transform: scaleY(0.95) rotate(-2deg); }
+    }
+    .blow-btn {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      background: #f7b6b6;
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.7rem 2.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px 1px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.10);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      letter-spacing: 0.3px;
+      animation: glowBtn 2s infinite alternate;
+      margin-bottom: 1.5rem;
+    }
+    .blow-btn:hover {
+      background: #e68fa6;
+      box-shadow: 0 0 18px 4px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.13);
+      transform: scale(1.04);
+    }
+    @keyframes glowBtn {
+      from { box-shadow: 0 0 10px 1px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.10); }
+      to { box-shadow: 0 0 22px 6px #f8d6d6, 0 2px 8px rgba(140, 160, 180, 0.13); }
+    }
+    .happy-message {
+      font-size: 1.25rem;
+      color: #e68fa6;
+      font-family: 'Merriweather', serif;
+      text-align: center;
+      margin-top: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      opacity: 0;
+      transition: opacity 0.7s;
+    }
+    .happy-message.visible {
+      opacity: 1;
+    }
+    .baymax-panda-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .baymax-face, .panda-face {
+      width: 48px;
+      height: 48px;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .baymax-wrapper {
+        padding-top: 4rem;
+      }
+      .cake-svg-container {
+        width: 98vw;
+        height: 160px;
+        min-width: 0;
+      }
+      .cake-svg {
+        width: 98vw;
+        height: 160px;
+      }
+      .back-btn {
+        top: 8px;
+        left: 8px;
+        width: 38px;
+        height: 38px;
+      }
+      .baymax-title {
+        margin-top: 1.5rem;
+        font-size: 1.3rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .baymax-title { font-size: 1.1rem; }
+      .birthday-note { font-size: 1rem; padding: 0.7rem 0.5rem; }
+    }
+    .back-btn {
+      position: fixed;
+      top: 22px;
+      left: 22px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(140, 160, 180, 0.10);
+      border: 2px solid #e6f0f7;
+      transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: #e6f0f7;
+      border: 2px solid #8fa6b4;
+      box-shadow: 0 4px 16px 2px #b6c7d6;
+    }
+    .back-btn svg {
+      display: block;
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    .next-btn {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      background: #8fa6b4;
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.7rem 2.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px 1px #b6c7d6, 0 2px 8px rgba(140, 160, 180, 0.10);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      letter-spacing: 0.3px;
+      animation: glowBtn 2s infinite alternate;
+      margin-bottom: 1.5rem;
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .next-btn:hover {
+      background: #6b7c89;
+      box-shadow: 0 0 18px 4px #b6c7d6, 0 2px 8px rgba(140, 160, 180, 0.13);
+      transform: scale(1.04);
+    }
+    #nextEmoji {
+      font-size: 1.3em;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <a href="moods.html" class="back-btn" aria-label="Back to moods">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="14" fill="#fff" stroke="#8fa6b4" stroke-width="2"/>
+      <path d="M16.5 8L11 14L16.5 20" stroke="#8fa6b4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="visually-hidden">Back</span>
+  </a>
+  <div class="baymax-wrapper">
+    <div class="baymax-title">Baymax Birthday Note</div>
+    <div class="birthday-note" id="notePage">
+      <!-- JS will fill this -->
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextPage()">
+      <span id="nextEmoji">��</span> Next
+    </button>
+    <div class="cake-svg-container" id="cakeContainer" style="display:none;">
+      <svg class="cake-svg" id="cakeSVG" viewBox="0 0 180 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cake base -->
+        <ellipse cx="90" cy="180" rx="60" ry="18" fill="#e6eaf7"/>
+        <rect x="40" y="100" width="100" height="60" rx="24" fill="#fffbe6" stroke="#e68fa6" stroke-width="3"/>
+        <ellipse cx="90" cy="100" rx="50" ry="18" fill="#f7b6b6"/>
+        <!-- Candle -->
+        <rect x="85" y="60" width="10" height="32" rx="5" fill="#ffe066" stroke="#e68fa6" stroke-width="2"/>
+        <!-- Flame -->
+        <ellipse class="candle-flame" id="candleFlame" cx="90" cy="58" rx="7" ry="12" fill="#ffe066"/>
+        <ellipse class="candle-flame" id="candleFlame2" cx="90" cy="58" rx="3" ry="5" fill="#ffd700"/>
+      </svg>
+    </div>
+    <button class="blow-btn" id="blowBtn" onclick="blowCandle()" style="display:none;">Blow Candle</button>
+    <div class="happy-message" id="happyMsg">Yay! Happy Birthday! 🎉</div>
+    <div class="baymax-panda-row">
+      <svg class="baymax-face" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="24" cy="24" rx="22" ry="20" fill="#fff" stroke="#8fa6b4" stroke-width="2"/>
+        <ellipse cx="16" cy="24" rx="2.2" ry="2.2" fill="#8fa6b4"/>
+        <ellipse cx="32" cy="24" rx="2.2" ry="2.2" fill="#8fa6b4"/>
+        <rect x="18.2" y="24" width="11.6" height="1.2" rx="0.6" fill="#8fa6b4"/>
+      </svg>
+      <svg class="panda-face" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="24" cy="24" rx="20" ry="18" fill="#fff" stroke="#5c6a74" stroke-width="2"/>
+        <ellipse cx="12" cy="18" rx="4.5" ry="6" fill="#8fa6b4"/>
+        <ellipse cx="36" cy="18" rx="4.5" ry="6" fill="#8fa6b4"/>
+        <ellipse cx="24" cy="30" rx="10" ry="8" fill="#fff"/>
+        <ellipse cx="18.5" cy="27.5" rx="2" ry="2.5" fill="#5c6a74"/>
+        <ellipse cx="29.5" cy="27.5" rx="2" ry="2.5" fill="#5c6a74"/>
+        <ellipse cx="24" cy="34" rx="3" ry="1.5" fill="#5c6a74"/>
+      </svg>
+    </div>
+  </div>
+  <script>
+    // Birthday message pages and emojis
+    const notePages = [
+      {
+        text: `Happy Birthday, noona.<br>Di ako marunong sa bonggang handa o flowers na pang-pelikula,<br>pero kung sakaling pwede ang tahimik na effort at present na hindi loud...<br>nandito lang ako, steady lang. Pang-long term. <span style="font-size:1.2em;">🐼</span>`,
+        emoji: '🐼'
+      },
+      {
+        text: `Sabi nila, ‘pag birthday mo, ikaw dapat ang nire-regalo.<br>Pero sa totoo lang, ako ‘yung may nakuha—<br>'yung chance na makilala ka, makasabay sa araw-araw,<br>at unti-unting mapansin kahit hindi ako maingay. <span style="font-size:1.2em;">🤍</span>` ,
+        emoji: '🤍'
+      },
+      {
+        text: `Wala akong balak manggulo ng mundo mo—<br>gusto ko lang maging parte nun, kahit sa simpleng paraan.<br>Kaya sana mas dumami pa araw mo na masaya,<br>at sana kahit di araw mo—nandun pa rin ako. <span style="font-size:1.2em;">🫶</span>` ,
+        emoji: '🫶'
+      },
+      {
+        text: `Maligayang bati, noona.<br>Pangako, hindi lang ito dahil birthday mo. Kahit walang cake, may totoo. <span style="font-size:1.2em;">🎂</span>` ,
+        emoji: '🎂'
+      }
+    ];
+    let page = 0;
+    function showPage() {
+      document.getElementById('notePage').innerHTML = notePages[page].text;
+      document.getElementById('nextEmoji').textContent = notePages[page].emoji;
+      document.getElementById('nextBtn').style.display = (page < notePages.length-1) ? 'flex' : 'none';
+      if(page === notePages.length-1) {
+        document.getElementById('cakeContainer').style.display = '';
+        document.getElementById('blowBtn').style.display = '';
+      } else {
+        document.getElementById('cakeContainer').style.display = 'none';
+        document.getElementById('blowBtn').style.display = 'none';
+        document.getElementById('happyMsg').classList.remove('visible');
+        document.getElementById('cakeSVG').classList.remove('extinguished');
+      }
+    }
+    function nextPage() {
+      if(page < notePages.length-1) {
+        page++;
+        showPage();
+      }
+    }
+    window.onload = showPage;
+    function blowCandle() {
+      const cake = document.getElementById('cakeSVG');
+      const msg = document.getElementById('happyMsg');
+      cake.classList.add('extinguished');
+      setTimeout(() => {
+        msg.classList.add('visible');
+      }, 700);
+    }
+  </script>
+</body>
+</html> 
