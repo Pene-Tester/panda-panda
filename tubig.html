@@ -295,6 +295,36 @@
       clip: rect(0,0,0,0);
       border: 0;
     }
+    .next-tab-btn {
+      display: inline-block;
+      margin: 2.2rem auto 0 auto;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      outline: none;
+    }
+    .next-tab-btn .next-btn-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 1px #d6d6f7, 0 2px 8px rgba(140, 160, 180, 0.10);
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .next-tab-btn:hover .next-btn-icon {
+      background: #e6f0f7;
+      box-shadow: 0 0 18px 4px #d6d6f7, 0 2px 8px rgba(140, 160, 180, 0.13);
+      transform: scale(1.08);
+    }
   </style>
 </head>
 <body>
@@ -351,6 +381,14 @@
       <span class="baymax-tip-emoji">🤖</span>
       Baymax tip: "A hydrated panda is a happy panda!"
     </div>
+    <a href="baymax.html" class="next-tab-btn" id="nextTabBtn" style="display:none;" aria-label="Proceed to next tab">
+      <span class="next-btn-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 28S4 20 4 12.5C4 8.35786 7.35786 5 11.5 5C13.9853 5 16 7.01472 16 9.5C16 7.01472 18.0147 5 20.5 5C24.6421 5 28 8.35786 28 12.5C28 20 16 28 16 28Z" fill="#e68fa6" stroke="#b6a6e6" stroke-width="2"/>
+          <path d="M20 16L24 20M24 20L20 24M24 20H12" stroke="#b6a6e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
   </div>
   <script>
     function refillWater() {
@@ -381,6 +419,8 @@
       success.innerHTML = 'Good job! <span>🐼</span>';
       row.parentNode.appendChild(success);
       makePandaHappy();
+      // Show next button
+      document.getElementById('nextTabBtn').style.display = 'inline-block';
     }
 
     function makePandaHappy() {
