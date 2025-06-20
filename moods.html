@@ -172,7 +172,7 @@
         </span>
         <div class="mood-label">Reminder ng tubig</div>
       </a>
-      <a href="baymax.html" class="mood-card clickable" title="Go to Baymax Birthday Note">
+      <a href="baymax.html" class="mood-card clickable" title="Go to Baymax Birthday Note" id="baymaxCard">
         <span class="mood-icon"> <!-- Envelope Heart SVG -->
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="16" rx="4" fill="#fff" stroke="#5c6a74" stroke-width="2"/><path d="M4 8L16 20L28 8" stroke="#8fa6b4" stroke-width="2"/><path d="M16 15C17.1046 15 18 14.1046 18 13C18 11.8954 17.1046 11 16 11C14.8954 11 14 11.8954 14 13C14 14.1046 14.8954 15 16 15Z" fill="#8fa6b4"/></svg>
         </span>
@@ -185,5 +185,24 @@
     <ellipse cx="220" cy="90" rx="30" ry="18" fill="#fff"/>
     <!-- (rest of panda SVG) -->
   </svg>
+  <script>
+    // Lock Baymax note tab until Tubig is complete
+    const baymaxCard = document.getElementById('baymaxCard');
+    if (baymaxCard) {
+      if (localStorage.getItem('tubigComplete') !== 'yes') {
+        baymaxCard.classList.add('locked');
+        baymaxCard.removeAttribute('href');
+        baymaxCard.style.pointerEvents = 'none';
+        baymaxCard.style.opacity = '0.5';
+        baymaxCard.title = 'Finish the Tubig tab first!';
+      } else {
+        baymaxCard.classList.remove('locked');
+        baymaxCard.href = 'baymax.html';
+        baymaxCard.style.pointerEvents = '';
+        baymaxCard.style.opacity = '';
+        baymaxCard.title = 'Go to Baymax Birthday Note';
+      }
+    }
+  </script>
 </body>
 </html> 
